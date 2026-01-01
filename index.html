@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAY'S SPACE</title>
+    <style>
+        /* --- RESET & BASIC SETUP --- */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            /* Retro tiled background pattern */
+            background-color: #000000;
+            background-image: 
+                linear-gradient(45deg, #111 25%, transparent 25%, transparent 75%, #111 75%, #111),
+                linear-gradient(45deg, #111 25%, transparent 25%, transparent 75%, #111 75%, #111);
+            background-position: 0 0, 10px 10px;
+            background-size: 20px 20px;
+            font-family: "Courier New", Courier, monospace; /* Fallback for retro feel */
+            color: #e0e0e0;
+            /* Scrollbar styling to match the era */
+            scrollbar-width: thin;
+            scrollbar-color: #888 #222;
+        }
+
+        /* --- LAYOUT CONTAINER --- */
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            background-color: #222;
+            border: 2px solid #555;
+            padding: 10px;
+            box-shadow: 5px 5px 0px #000;
+        }
+
+        /* --- HEADER AREA --- */
+        header {
+            text-align: center;
+            border-bottom: 2px dashed #555;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-family: "Impact", sans-serif;
+            font-size: 4rem;
+            margin: 0;
+            letter-spacing: 5px;
+            text-shadow: 3px 3px 0px #ff00ff, -1px -1px 0px #00ffff;
+            background: linear-gradient(to bottom, #ff69b4, #ff1493);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(2px 2px 0px #000);
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: #ff69b4;
+            margin-top: 10px;
+            font-style: italic;
+            text-shadow: 1px 1px 2px #000;
+        }
+
+        /* --- NAVIGATION BAR --- */
+        nav {
+            background-color: #333;
+            border: 1px solid #666;
+            padding: 5px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        nav a {
+            color: #ff69b4;
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            padding: 5px 10px;
+            border: 1px outset #555;
+            background-color: #222;
+        }
+
+        nav a:active {
+            border-style: inset;
+        }
+
+        nav a:hover {
+            background-color: #ff1493;
+            color: #fff;
+            text-decoration: underline overline;
+        }
+
+        /* --- MAIN CONTENT GRID --- */
+        .content-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        /* Left Column */
+        .main-column {
+            flex: 2;
+            min-width: 300px;
+        }
+
+        /* Right Column */
+        .sidebar {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        /* --- GENERIC BOX STYLES --- */
+        .box {
+            background-color: #1a1a1a;
+            border: 2px solid #444;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .box-header {
+            background: linear-gradient(to right, #ff1493, #8b008b); /* Hot pink to purple */
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            text-align: left;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .box-header .controls span {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: #fff;
+            margin-left: 3px;
+            border: 1px solid #000;
+        }
+
+        .box-content {
+            padding: 10px;
+            background-color: #000; /* Inner black bg */
+            color: #ccc;
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        /* --- SPECIFIC SECTIONS --- */
+
+        /* About Me Image */
+        .profile-pic {
+            width: 100%;
+            height: auto;
+            border: 2px solid #fff;
+            filter: contrast(1.2) grayscale(0.2); /* Retro photo look */
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        /* Text Styling */
+        .blinking {
+            animation: blinker 1s linear infinite;
+            color: #ff1493;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        @keyframes blinker {
+            50% { opacity: 0; }
+        }
+
+        .marquee-container {
+            background-color: #111;
+            color: #ff69b4;
+            font-family: monospace;
+            padding: 5px;
+            border: 1px solid #ff1493;
+            overflow: hidden;
+            white-space: nowrap;
+            margin-bottom: 15px;
+        }
+
+        /* Top Friends Grid */
+        .friends-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            text-align: center;
+        }
+
+        .friend {
+            background-color: #222;
+            border: 1px solid #444;
+            padding: 5px;
+            transition: 0.2s;
+        }
+
+        .friend:hover {
+            background-color: #333;
+            border-color: #fff;
+        }
+
+        .friend img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border: 1px dashed #666;
+            image-rendering: pixelated; /* Retro feel */
+        }
+
+        .friend-name {
+            display: block;
+            margin-top: 5px;
+            font-size: 0.75rem;
+            color: #aaa;
+        }
+
+        /* Music Player */
+        .music-player {
+            background-color: #222;
+            border: 1px inset #444;
+            padding: 8px;
+            margin-top: 10px;
+        }
+
+        .track-info {
+            color: #00ffff;
+            font-size: 0.8rem;
+            margin-bottom: 5px;
+            font-family: monospace;
+        }
+
+        .player-controls {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+        }
+
+        .btn {
+            border: 1px solid #666;
+            background: #333;
+            color: #fff;
+            padding: 2px 8px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .btn:active {
+            background: #000;
+            border-style: inset;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #000;
+            margin-top: 5px;
+            border: 1px solid #444;
+            position: relative;
+        }
+
+        .progress-fill {
+            width: 35%;
+            height: 100%;
+            background: #00ff00;
+        }
+
+        /* Date Block */
+        .date-block {
+            text-align: right;
+            color: #555;
+            font-size: 0.7rem;
+            margin-top: 5px;
+            border-top: 1px dotted #333;
+            padding-top: 5px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            font-size: 0.7rem;
+            color: #555;
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 2px solid #333;
+        }
+
+        footer img {
+            height: 30px;
+            vertical-align: middle;
+            opacity: 0.7;
+        }
+
+        /* Utility for pixel font simulation */
+        .retro-text {
+            font-family: "Verdana", sans-serif;
+        }
+
+        /* Windows 95 Popup Ad */
+        .win95-popup {
+            background-color: #c0c0c0;
+            border: 2px solid;
+            border-color: #ffffff #808080 #808080 #ffffff;
+            box-shadow: 2px 2px 0px #000;
+            margin-bottom: 15px;
+            font-family: "MS Sans Serif", "Segoe UI", Tahoma, sans-serif;
+        }
+
+        .win95-titlebar {
+            background: linear-gradient(to right, #000080, #1084d0);
+            color: white;
+            padding: 2px 4px;
+            font-size: 12px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .win95-titlebar-buttons {
+            display: flex;
+            gap: 2px;
+        }
+
+        .win95-btn-small {
+            width: 16px;
+            height: 14px;
+            background: #c0c0c0;
+            border: 1px solid;
+            border-color: #ffffff #808080 #808080 #ffffff;
+            font-size: 9px;
+            line-height: 10px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .win95-content {
+            padding: 10px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .win95-text {
+            flex: 1;
+            text-align: center;
+        }
+
+        .win95-text h3 {
+            color: #ff0000;
+            font-size: 14px;
+            margin: 0 0 5px 0;
+            text-transform: uppercase;
+            animation: blinker 0.5s linear infinite;
+        }
+
+        .win95-text p {
+            color: #000;
+            font-size: 11px;
+            margin: 0 0 8px 0;
+        }
+
+        .win95-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .win95-click-btn {
+            background: #c0c0c0;
+            border: 2px solid;
+            border-color: #ffffff #808080 #808080 #ffffff;
+            padding: 4px 12px;
+            font-size: 11px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            color: #000;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .win95-click-btn:hover {
+            background: #d4d4d4;
+        }
+
+        .win95-click-btn:active {
+            border-color: #808080 #ffffff #ffffff #808080;
+        }
+
+        .win95-img {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border: 2px solid;
+            border-color: #808080 #ffffff #ffffff #808080;
+        }
+
+        /* Book Me Popup - Windows 95 Style */
+        .win95-book-popup {
+            background-color: #c0c0c0;
+            border: 3px solid;
+            border-color: #ffffff #808080 #808080 #ffffff;
+            box-shadow: 4px 4px 0px #000;
+            margin: 20px auto;
+            max-width: 500px;
+            font-family: "MS Sans Serif", "Segoe UI", Tahoma, sans-serif;
+        }
+
+        .win95-book-titlebar {
+            background: linear-gradient(to right, #a11b1b, #ff4444);
+            color: white;
+            padding: 3px 5px;
+            font-size: 13px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-shadow: 1px 1px 0px #000;
+        }
+
+        .win95-book-titlebar-buttons {
+            display: flex;
+            gap: 2px;
+        }
+
+        .win95-book-titlebar-buttons span {
+            width: 16px;
+            height: 14px;
+            background: #c0c0c0;
+            border: 2px solid;
+            border-color: #ffffff #808080 #808080 #ffffff;
+            font-size: 10px;
+            color: #000;
+            text-align: center;
+            line-height: 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .win95-book-content {
+            padding: 20px;
+            text-align: center;
+            background: linear-gradient(to bottom, #ffffcc, #ffff99);
+            border: 2px solid;
+            border-color: #808080 #ffffff #ffffff #808080;
+            margin: 3px;
+        }
+
+        .win95-book-content h3 {
+            color: #000;
+            font-size: 18px;
+            margin: 0 0 5px 0;
+            text-transform: uppercase;
+        }
+
+        .win95-book-content p {
+            color: #333;
+            font-size: 12px;
+            margin: 0 0 15px 0;
+        }
+
+        .win95-book-btn {
+            background: #c0c0c0;
+            border: 3px solid;
+            border-color: #ffffff #808080 #808080 #ffffff;
+            padding: 8px 25px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            color: #000;
+            display: inline-block;
+            font-family: "MS Sans Serif", "Segoe UI", Tahoma, sans-serif;
+        }
+
+        .win95-book-btn:hover {
+            background: #d4d4d4;
+        }
+
+        .win95-book-btn:active {
+            border-color: #808080 #ffffff #ffffff #808080;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 600px) {
+            .content-wrapper {
+                flex-direction: column;
+            }
+            h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <header>
+        <h1>MAY'S SPACE</h1>
+        <div class="subtitle">"I Don't Got No Shame Left, Baby, That's My Freedom"</div>
+    </header>
+
+    <!-- Marquee (Retro scrolling text) -->
+    <div class="marquee-container">
+        <marquee scrollamount="5" scrolldelay="100">+++ WELCOME 2 MAY'S DOMAIN +++ no shame, no filter, no apologies +++ currently vibing & thriving +++ sign my guestbook or don't, i'm not ur mom +++ xoxo +++</marquee>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="photos.html">Photos</a>
+        <a href="music.html">Music</a>
+        <a href="guestbook.html">Guestbook</a>
+    </nav>
+
+    <div class="content-wrapper">
+        
+        <!-- LEFT COLUMN -->
+        <div class="main-column">
+            
+            <!-- About Me Box -->
+            <div class="box">
+                <div class="box-header">
+                    <span>About May</span>
+                    <div class="controls"><span></span><span></span><span></span></div>
+                </div>
+                <div class="box-content">
+                    <img src="assets/headshot.jpg.png" alt="May's Photo" class="profile-pic">
+
+                    <p class="retro-text">
+                        <strong>Name:</strong> May Endusa Coma<br>
+                        <strong>AKA:</strong> May<br>
+                        <strong>Location:</strong> Somewhere between chaos & bliss<br>
+                        <strong>Mood:</strong> <span class="blinking">UNHINGED & THRIVING</span>
+                    </p>
+
+                    <hr style="border: 0; border-top: 1px dashed #444;">
+
+                    <p>
+                        heyyy welcome 2 my corner of the internet!! <br><br>
+                        i gave up caring what ppl think approximately 47 breakdowns ago and honestly?? best decision ever. shame is a social construct and i have chosen FREEDOM baby!!!
+                    </p>
+                    <p>
+                        if ur here u either love me or ur obsessed with me either way... welcome lol<br>
+                        <br>
+                        <i>"they tried to bury me but didn't know i was a seed" - some quote i found on tumblr probably</i>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Blog/Updates Box -->
+            <div class="box">
+                <div class="box-header">
+                    <span>May's Unfiltered Thoughts</span>
+                    <div class="controls"><span></span><span></span></div>
+                </div>
+                <div class="box-content">
+                    <p><strong>Today @ 3:47am</strong></p>
+                    <p>couldn't sleep so i redesigned my entire online presence. this is what peak productivity looks like. also ate cereal for dinner and regret nothing. NO SHAME LEFT REMEMBER???</p>
+                    <br>
+                    <p><strong>Yesterday</strong></p>
+                    <p>someone told me i have "too much personality" and honestly that's the nicest thing anyone's ever said to me. gonna put that on my resume tbh</p>
+                    <br>
+                    <p><strong>Last Week Probably</strong></p>
+                    <p>life update: still iconic, still unbothered, still making questionable decisions at 2am. living my truth or whatever the kids say these days lmaooo</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div class="sidebar">
+            
+            <!-- Music Player Box -->
+            <div class="box">
+                <div class="box-header">
+                    <span>Now Playing</span>
+                    <div class="controls"><span></span></div>
+                </div>
+                <div class="box-content">
+                    <div class="music-player">
+                        <div class="track-info">
+                            May's Chaotic Playlist<br>
+                            <span style="color:#fff; font-weight:bold;">iconic</span>
+                        </div>
+                        <audio id="bgMusic" autoplay loop>
+                            <source src="assets/MADISON ROSE - ICONIC! (OFFICIAL AUDIO) - Madison Rose.mp3" type="audio/mpeg">
+                        </audio>
+                        <div style="text-align: center; margin-top: 8px;">
+                            <button class="btn" onclick="document.getElementById('bgMusic').play()">PLAY</button>
+                            <button class="btn" onclick="document.getElementById('bgMusic').pause()">PAUSE</button>
+                        </div>
+                        <div style="text-align: center; margin-top: 5px; font-size: 0.7rem; color: #888;">
+                            Volume: ████████ (MAX ALWAYS)
+                        </div>
+                    </div>
+                    <div class="date-block">
+                        time is a construct
+                    </div>
+                </div>
+            </div>
+
+            <!-- Windows 95 Style "Ad" Popup -->
+            <div class="win95-popup">
+                <div class="win95-titlebar">
+                    <span>WARNING!!!</span>
+                    <div class="win95-titlebar-buttons">
+                        <div class="win95-btn-small">_</div>
+                        <div class="win95-btn-small">X</div>
+                    </div>
+                </div>
+                <div class="win95-content">
+                    <div class="win95-text">
+                        <h3>HORNY SINGLES IN YOUR AREA!!!</h3>
+                        <p>1 hot single wants to meet YOU right now!</p>
+                        <div class="win95-buttons">
+                            <a href="https://www.instagram.com/may.ndusacoma/" target="_blank" class="win95-click-btn">&gt;&gt; CLICK HERE &lt;&lt;</a>
+                            <a href="https://www.facebook.com/may.ndusacoma2" target="_blank" class="win95-click-btn">&gt;&gt; CLICK HERE &lt;&lt;</a>
+                        </div>
+                    </div>
+                    <img src="assets/may.jpg" alt="Hot Single" class="win95-img">
+                </div>
+            </div>
+
+            <!-- Top Friends Box -->
+            <div class="box">
+                <div class="box-header">
+                    <span>May's Inner Circle</span>
+                    <div class="controls"><span></span><span></span></div>
+                </div>
+                <div class="box-content">
+                    <div class="friends-grid">
+                        <!-- Friend 1 -->
+                        <div class="friend">
+                            <img src="assets/therapist.jpeg" alt="My Therapist">
+                            <span class="friend-name">My Therapist</span>
+                        </div>
+                        <!-- Friend 2 -->
+                        <div class="friend">
+                            <img src="assets/icedcoffee.jpeg" alt="Iced Coffee">
+                            <span class="friend-name">Iced Coffee</span>
+                        </div>
+                        <!-- Friend 3 -->
+                        <div class="friend">
+                            <img src="assets/3amthoughts.jpg" alt="3am Thoughts">
+                            <span class="friend-name">3am Thoughts</span>
+                        </div>
+                        <!-- Friend 4 -->
+                        <div class="friend">
+                            <img src="assets/baddecisions.jpg" alt="Bad Decisions">
+                            <span class="friend-name">Bad Decisions</span>
+                        </div>
+                        <!-- Friend 5 -->
+                        <div class="friend">
+                            <img src="assets/audacity.jpeg" alt="The Audacity">
+                            <span class="friend-name">The Audacity</span>
+                        </div>
+                        <!-- Friend 6 -->
+                        <div class="friend">
+                            <img src="assets/noshame.jpg" alt="xX_NoShame_Xx">
+                            <span class="friend-name">xX_NoShame_Xx</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interests Box -->
+            <div class="box">
+                <div class="box-header">
+                    <span>Things I'm Into</span>
+                </div>
+                <div class="box-content">
+                    <ul style="list-style-type: square; padding-left: 20px; margin: 0;">
+                        <li>Being Unapologetically Me</li>
+                        <li>Chaos (Organized & Otherwise)</li>
+                        <li>Late Night Overthinking</li>
+                        <li>Unhinged Group Chats</li>
+                        <li>Iconic One-Liners</li>
+                        <li>Living Without Shame</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Book Me Popup - Windows 95 Style -->
+    <div class="win95-book-popup">
+        <div class="win95-book-titlebar">
+            <span>ATTENTION:</span>
+            <div class="win95-book-titlebar-buttons">
+                <span>_</span>
+                <span>X</span>
+            </div>
+        </div>
+        <div class="win95-book-content">
+            <h3>BOOK ME TO DO STUFF</h3>
+            <p>(no weird shit)</p>
+            <a href="https://www.facebook.com/may.ndusacoma2" target="_blank" class="win95-book-btn">!!!CLICK HERE!!!</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>
+            Copyright &copy; Forever - May's Space. No Rights Reserved Because Rules Are Boring.<br>
+            Made with sleep deprivation & delusion. Best viewed with an open mind & low expectations.
+        </p>
+        <div style="margin-top: 10px;">
+            <!-- Badge placeholders -->
+            <span style="border:1px solid #444; padding:2px 5px; font-size:10px;">NO SHAME</span>
+            <span style="border:1px solid #444; padding:2px 5px; font-size:10px;">100% AUTHENTIC</span>
+            <span style="border:1px solid #444; padding:2px 5px; font-size:10px;">CHAOS CERTIFIED</span>
+        </div>
+    </footer>
+
+</div>
+
+</body>
+</html>

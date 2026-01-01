@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENTER MY SITE - May's Space</title>
+    <style>
+        /* --- CORE STYLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000000;
+            background-image: radial-gradient(white 1px, transparent 1px);
+            background-size: 40px 40px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+            overflow-x: hidden;
+            padding: 20px;
+        }
+
+        /* --- THE CONTAINER --- */
+        .splash-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            z-index: 10;
+        }
+
+        /* --- THE FLASHING STRIPED BORDER --- */
+        .splash-wrapper::before {
+            content: "";
+            position: absolute;
+            top: -10px; left: -10px; right: -10px; bottom: -10px;
+            z-index: -1;
+            background: repeating-linear-gradient(
+                45deg,
+                #000,
+                #000 10px,
+                #fff 10px,
+                #fff 20px
+            );
+            border-radius: 4px;
+            animation: flash-border 0.5s infinite;
+            box-shadow: 0 0 20px rgba(255,255,255,0.2);
+        }
+
+        @keyframes flash-border {
+            0% { opacity: 1; }
+            50% { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+
+        /* --- THE WINDOW 95 STYLE POPUP --- */
+        .window95 {
+            background-color: #c0c0c0;
+            border: 2px solid;
+            border-color: #fff #808080 #808080 #fff;
+            box-shadow: 4px 4px 10px rgba(0,0,0,0.5);
+            padding: 3px;
+            width: 100%;
+        }
+
+        /* Title Bar */
+        .title-bar {
+            background: linear-gradient(90deg, #000080, #1084d0);
+            color: white;
+            padding: 4px 6px;
+            font-weight: bold;
+            font-size: clamp(0.7rem, 2.5vw, 0.9rem);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            letter-spacing: 0.5px;
+        }
+
+        .close-btn {
+            background: #c0c0c0;
+            color: black;
+            border: 1px outset #fff;
+            width: 16px;
+            height: 16px;
+            font-size: 12px;
+            line-height: 12px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .close-btn:active {
+            border-style: inset;
+        }
+
+        /* Content Area - This is the key container */
+        .window-content {
+            padding: 3px;
+            background: #fff;
+            border: 2px solid;
+            border-color: #808080 #fff #fff #808080;
+        }
+
+        /* --- IMAGE CONTAINER --- */
+        .image-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        /* --- THE IMAGE --- */
+        .promo-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            border: 1px solid #000;
+        }
+
+        /* --- THE BUTTON - Positioned over the drawn box --- */
+        .enter-btn {
+            position: absolute;
+            /* Position to align with the drawn box in the image */
+            /* The box appears to be roughly: */
+            /* - Centered horizontally */
+            /* - About 58% from the top, 20% tall, 28% wide */
+            top: 58%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 28%;
+            height: 18%;
+
+            /* Make it invisible but clickable - the image has the text */
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
+
+            /* Uncomment below to see the clickable area for debugging */
+            /* background: rgba(255, 0, 0, 0.3); */
+        }
+
+        .enter-btn:hover {
+            /* Subtle highlight effect on hover */
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 15px rgba(255, 105, 180, 0.8);
+        }
+
+        .enter-btn:active {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Screen reader text for accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* --- ALTERNATIVE: Visible button overlay --- */
+        /* If you want a visible button instead of using the image text,
+           uncomment the styles below and update .enter-btn */
+        /*
+        .enter-btn-visible {
+            position: absolute;
+            top: 58%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #c0c0c0;
+            border: 3px solid;
+            border-color: #fff #808080 #808080 #fff;
+            color: #000;
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+            font-size: clamp(0.8rem, 3vw, 1.2rem);
+            font-weight: bold;
+            padding: clamp(8px, 2vw, 15px) clamp(15px, 4vw, 30px);
+            cursor: pointer;
+            text-transform: uppercase;
+            text-decoration: none;
+            box-shadow: 3px 3px 0px #000;
+            white-space: nowrap;
+            z-index: 20;
+        }
+        */
+
+        /* Blinking animation for text if using visible button */
+        .blink {
+            animation: blinker 0.8s linear infinite;
+        }
+
+        @keyframes blinker {
+            50% { opacity: 0; }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 500px) {
+            body {
+                padding: 10px;
+            }
+
+            .splash-wrapper::before {
+                top: -5px; left: -5px; right: -5px; bottom: -5px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="splash-wrapper">
+
+        <!-- Window 95 Container -->
+        <div class="window95">
+
+            <!-- Title Bar -->
+            <div class="title-bar">
+                <span>welcome_2_mays_space.exe</span>
+                <div class="close-btn">X</div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="window-content">
+
+                <!-- Image Container with button overlay -->
+                <div class="image-container">
+                    <!-- The Image -->
+                    <img src="assets/welcome.JPG" alt="Welcome to May's Space - Click to Enter" class="promo-image">
+
+                    <!-- Invisible clickable button positioned over the drawn box -->
+                    <a href="index.html" class="enter-btn">
+                        <span class="sr-only">Enter My Site</span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

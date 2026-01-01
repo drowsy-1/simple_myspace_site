@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAY'S SPACE - Blog</title>
+    <style>
+        /* --- RESET & BASIC SETUP --- */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+            background-image:
+                linear-gradient(45deg, #111 25%, transparent 25%, transparent 75%, #111 75%, #111),
+                linear-gradient(45deg, #111 25%, transparent 25%, transparent 75%, #111 75%, #111);
+            background-position: 0 0, 10px 10px;
+            background-size: 20px 20px;
+            font-family: "Courier New", Courier, monospace;
+            color: #e0e0e0;
+            scrollbar-width: thin;
+            scrollbar-color: #888 #222;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            background-color: #222;
+            border: 2px solid #555;
+            padding: 10px;
+            box-shadow: 5px 5px 0px #000;
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px dashed #555;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-family: "Impact", sans-serif;
+            font-size: 4rem;
+            margin: 0;
+            letter-spacing: 5px;
+            text-shadow: 3px 3px 0px #ff00ff, -1px -1px 0px #00ffff;
+            background: linear-gradient(to bottom, #ff69b4, #ff1493);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(2px 2px 0px #000);
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: #ff69b4;
+            margin-top: 10px;
+            font-style: italic;
+            text-shadow: 1px 1px 2px #000;
+        }
+
+        nav {
+            background-color: #333;
+            border: 1px solid #666;
+            padding: 5px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        nav a {
+            color: #ff69b4;
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            padding: 5px 10px;
+            border: 1px outset #555;
+            background-color: #222;
+        }
+
+        nav a:active {
+            border-style: inset;
+        }
+
+        nav a:hover {
+            background-color: #ff1493;
+            color: #fff;
+            text-decoration: underline overline;
+        }
+
+        .marquee-container {
+            background-color: #111;
+            color: #ff69b4;
+            font-family: monospace;
+            padding: 5px;
+            border: 1px solid #ff1493;
+            overflow: hidden;
+            white-space: nowrap;
+            margin-bottom: 15px;
+        }
+
+        .box {
+            background-color: #1a1a1a;
+            border: 2px solid #444;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .box-header {
+            background: linear-gradient(to right, #ff1493, #8b008b);
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            text-align: left;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .box-header .controls span {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: #fff;
+            margin-left: 3px;
+            border: 1px solid #000;
+        }
+
+        .box-content {
+            padding: 10px;
+            background-color: #000;
+            color: #ccc;
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .page-title h2 {
+            color: #ff69b4;
+            font-size: 1.5rem;
+            text-shadow: 2px 2px 0px #000;
+            margin: 0;
+        }
+
+        /* Blog Post Styles */
+        .blog-post {
+            background-color: #111;
+            border: 1px solid #333;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .blog-post-header {
+            background: linear-gradient(to right, #333, #222);
+            padding: 10px 15px;
+            border-bottom: 1px dashed #444;
+        }
+
+        .blog-post-title {
+            color: #ff69b4;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin: 0 0 5px 0;
+        }
+
+        .blog-post-meta {
+            color: #666;
+            font-size: 0.7rem;
+        }
+
+        .blog-post-meta span {
+            margin-right: 15px;
+        }
+
+        .blog-post-content {
+            padding: 15px;
+        }
+
+        .blog-post-image {
+            float: right;
+            width: 200px;
+            margin: 0 0 15px 15px;
+            border: 2px solid #ff1493;
+            box-shadow: 3px 3px 0px #000;
+        }
+
+        .blog-post-image img {
+            width: 100%;
+            display: block;
+            filter: contrast(1.1);
+        }
+
+        .blog-post-image .caption {
+            background: #1a1a1a;
+            color: #888;
+            font-size: 0.7rem;
+            padding: 5px;
+            text-align: center;
+        }
+
+        .blog-post-text {
+            color: #ccc;
+            line-height: 1.6;
+        }
+
+        .blog-post-text p {
+            margin: 0 0 15px 0;
+        }
+
+        .blog-post-footer {
+            background: #0a0a0a;
+            padding: 10px 15px;
+            border-top: 1px dashed #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+        }
+
+        .blog-tags span {
+            background: #222;
+            border: 1px solid #444;
+            padding: 2px 6px;
+            margin-right: 5px;
+            color: #ff69b4;
+        }
+
+        .blog-comments {
+            color: #00ffff;
+        }
+
+        .mood-indicator {
+            display: inline-block;
+            background: #1a1a1a;
+            border: 1px solid #444;
+            padding: 3px 8px;
+            font-size: 0.75rem;
+            margin-top: 5px;
+        }
+
+        .mood-indicator .label {
+            color: #888;
+        }
+
+        .mood-indicator .mood {
+            color: #ff1493;
+            font-weight: bold;
+        }
+
+        .blinking {
+            animation: blinker 1s linear infinite;
+            color: #ff1493;
+            font-weight: bold;
+        }
+
+        @keyframes blinker {
+            50% { opacity: 0; }
+        }
+
+        .divider {
+            text-align: center;
+            color: #444;
+            margin: 20px 0;
+            font-size: 0.8rem;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.7rem;
+            color: #555;
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 2px solid #333;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            .blog-post-image {
+                float: none;
+                width: 100%;
+                margin: 0 0 15px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <header>
+        <h1>MAY'S SPACE</h1>
+        <div class="subtitle">"I Don't Got No Shame Left, Baby, That's My Freedom"</div>
+    </header>
+
+    <!-- Marquee -->
+    <div class="marquee-container">
+        <marquee scrollamount="5" scrolldelay="100">+++ MAY'S UNFILTERED BLOG +++ raw thoughts & chaotic energy +++ read at ur own risk lol +++ xoxo +++</marquee>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="photos.html">Photos</a>
+        <a href="music.html">Music</a>
+        <a href="guestbook.html">Guestbook</a>
+    </nav>
+
+    <!-- Page Title -->
+    <div class="page-title">
+        <h2>* * * MAY'S BLOG * * *</h2>
+        <p style="color: #888; font-size: 0.8rem;">( unfiltered thoughts from an unhinged mind )</p>
+    </div>
+
+    <!-- Blog Posts Box -->
+    <div class="box">
+        <div class="box-header">
+            <span>Latest Entries</span>
+            <div class="controls"><span></span><span></span><span></span></div>
+        </div>
+        <div class="box-content">
+
+            <!-- Featured Blog Post -->
+            <div class="blog-post">
+                <div class="blog-post-header">
+                    <h3 class="blog-post-title">MY FIRST PERFORMANCE!!! <span class="blinking">*NEW*</span></h3>
+                    <div class="blog-post-meta">
+                        <span>Posted: Today @ 11:47pm</span>
+                        <span>|</span>
+                        <span>Views: 420</span>
+                    </div>
+                    <div class="mood-indicator">
+                        <span class="label">Current Mood:</span>
+                        <span class="mood">ICONIC & UNSTOPPABLE</span>
+                    </div>
+                </div>
+                <div class="blog-post-content">
+                    <div class="blog-post-image">
+                        <img src="assets/first_performance.jpg" alt="First Performance">
+                        <div class="caption">me doing the thing!!</div>
+                    </div>
+                    <div class="blog-post-text">
+                        <p>OKAY SO. u guys. U GUYS. i finally did it!!!! i got up on that stage and i performed and i didnt die???</p>
+
+                        <p>like honestly i was SO nervous i thought i was gonna throw up or pass out or both simultaneously but then the music started and something just... clicked?? like suddenly i wasnt scared anymore i was just THERE in the moment living my absolute best life</p>
+
+                        <p>the crowd was so amazing like everyone was vibing and cheering and i could feel the energy and it was literally the most alive ive ever felt in my entire existence on this planet. no exaggeration.</p>
+
+                        <p>shoutout to everyone who said i couldnt do it. thanks 4 the motivation babes!! couldnt have done it without ur doubt fueling my spite <3</p>
+
+                        <p>anyway this is just the beginning. stay tuned for more iconic moments. no shame, all fame, thats the game.</p>
+
+                        <p>xoxo,<br>
+                        <strong>- May</strong></p>
+                    </div>
+                </div>
+                <div class="blog-post-footer">
+                    <div class="blog-tags">
+                        <span>#iconic</span>
+                        <span>#firstperformance</span>
+                        <span>#noshame</span>
+                    </div>
+                    <div class="blog-comments">[ 23 comments ]</div>
+                </div>
+            </div>
+
+            <div class="divider">- - - - - - - - - - - - - - -</div>
+
+            <!-- Older Post Template -->
+            <div class="blog-post">
+                <div class="blog-post-header">
+                    <h3 class="blog-post-title">3am thoughts (a thread)</h3>
+                    <div class="blog-post-meta">
+                        <span>Posted: Yesterday @ 3:22am</span>
+                        <span>|</span>
+                        <span>Views: 247</span>
+                    </div>
+                    <div class="mood-indicator">
+                        <span class="label">Current Mood:</span>
+                        <span class="mood">delirious but enlightened</span>
+                    </div>
+                </div>
+                <div class="blog-post-content">
+                    <div class="blog-post-text">
+                        <p>why do we park in driveways but drive on parkways. WHO decided that. i need answers.</p>
+
+                        <p>also realized tonight that shame is literally just other peoples opinions living rent free in ur brain and honestly?? eviction notice served. get OUT.</p>
+
+                        <p>anyway gonna go eat cereal directly from the box like the feral gremlin i am. living my truth.</p>
+                    </div>
+                </div>
+                <div class="blog-post-footer">
+                    <div class="blog-tags">
+                        <span>#3amthoughts</span>
+                        <span>#philosophy</span>
+                    </div>
+                    <div class="blog-comments">[ 8 comments ]</div>
+                </div>
+            </div>
+
+            <div class="divider">- - - - - - - - - - - - - - -</div>
+
+            <!-- Another Older Post -->
+            <div class="blog-post">
+                <div class="blog-post-header">
+                    <h3 class="blog-post-title">reminder 2 myself & u</h3>
+                    <div class="blog-post-meta">
+                        <span>Posted: Last Week</span>
+                        <span>|</span>
+                        <span>Views: 892</span>
+                    </div>
+                    <div class="mood-indicator">
+                        <span class="label">Current Mood:</span>
+                        <span class="mood">motivational & unhinged</span>
+                    </div>
+                </div>
+                <div class="blog-post-content">
+                    <div class="blog-post-text">
+                        <p>hey. u. yeah u reading this. ur doing amazing and anyone who says otherwise can fight me (mentally. im not actually violent im just passionate ok)</p>
+
+                        <p>life is too short to be anything but completely, unapologetically, chaotically YOURSELF. wear the thing. say the thing. do the thing. who cares what "they" think. "they" arent paying ur bills or living ur life.</p>
+
+                        <p>this has been a psa from ur local unhinged icon. carry on.</p>
+                    </div>
+                </div>
+                <div class="blog-post-footer">
+                    <div class="blog-tags">
+                        <span>#motivation</span>
+                        <span>#selflove</span>
+                        <span>#psa</span>
+                    </div>
+                    <div class="blog-comments">[ 45 comments ]</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>
+            Copyright &copy; Forever - May's Space. No Rights Reserved Because Rules Are Boring.<br>
+            Made with sleep deprivation & delusion. Best viewed with an open mind & low expectations.
+        </p>
+        <div style="margin-top: 10px;">
+            <span style="border:1px solid #444; padding:2px 5px; font-size:10px;">NO SHAME</span>
+            <span style="border:1px solid #444; padding:2px 5px; font-size:10px;">100% AUTHENTIC</span>
+            <span style="border:1px solid #444; padding:2px 5px; font-size:10px;">CHAOS CERTIFIED</span>
+        </div>
+    </footer>
+
+</div>
+
+</body>
+</html>

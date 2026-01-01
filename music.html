@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAY'S SPACE - Music</title>
+    <style>
+        /* --- RESET & BASIC SETUP --- */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+            background-image:
+                linear-gradient(45deg, #111 25%, transparent 25%, transparent 75%, #111 75%, #111),
+                linear-gradient(45deg, #111 25%, transparent 25%, transparent 75%, #111 75%, #111);
+            background-position: 0 0, 10px 10px;
+            background-size: 20px 20px;
+            font-family: "Courier New", Courier, monospace;
+            color: #e0e0e0;
+            scrollbar-width: thin;
+            scrollbar-color: #888 #222;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            background-color: #222;
+            border: 2px solid #555;
+            padding: 10px;
+            box-shadow: 5px 5px 0px #000;
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px dashed #555;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-family: "Impact", sans-serif;
+            font-size: 4rem;
+            margin: 0;
+            letter-spacing: 5px;
+            text-shadow: 3px 3px 0px #ff00ff, -1px -1px 0px #00ffff;
+            background: linear-gradient(to bottom, #ff69b4, #ff1493);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(2px 2px 0px #000);
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: #ff69b4;
+            margin-top: 10px;
+            font-style: italic;
+            text-shadow: 1px 1px 2px #000;
+        }
+
+        nav {
+            background-color: #333;
+            border: 1px solid #666;
+            padding: 5px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        nav a {
+            color: #ff69b4;
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            padding: 5px 10px;
+            border: 1px outset #555;
+            background-color: #222;
+        }
+
+        nav a:active {
+            border-style: inset;
+        }
+
+        nav a:hover {
+            background-color: #ff1493;
+            color: #fff;
+            text-decoration: underline overline;
+        }
+
+        .marquee-container {
+            background-color: #111;
+            color: #ff69b4;
+            font-family: monospace;
+            padding: 5px;
+            border: 1px solid #ff1493;
+            overflow: hidden;
+            white-space: nowrap;
+            margin-bottom: 15px;
+        }
+
+        .box {
+            background-color: #1a1a1a;
+            border: 2px solid #444;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .box-header {
+            background: linear-gradient(to right, #ff1493, #8b008b);
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            text-align: left;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .box-header .controls span {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: #fff;
+            margin-left: 3px;
+            border: 1px solid #000;
+        }
+
+        .box-content {
+            padding: 10px;
+            background-color: #000;
+            color: #ccc;
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .page-title h2 {
+            color: #ff69b4;
+            font-size: 1.5rem;
+            text-shadow: 2px 2px 0px #000;
+            margin: 0;
+        }
+
+        /* Simple Old Web Player */
+        .old-player {
+            background: #c0c0c0;
+            border: 2px solid;
+            border-color: #fff #808080 #808080 #fff;
+            max-width: 300px;
+            margin: 0 auto 20px auto;
+            padding: 8px;
+        }
+
+        .old-player-inner {
+            background: #000;
+            border: 2px solid;
+            border-color: #808080 #fff #fff #808080;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .old-player-title {
+            color: #0f0;
+            font-family: "Courier New", monospace;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+
+        .old-player-title marquee {
+            color: #0f0;
+        }
+
+        .old-player-controls {
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+            margin-top: 8px;
+        }
+
+        .old-player-btn {
+            background: #c0c0c0;
+            border: 2px solid;
+            border-color: #fff #808080 #808080 #fff;
+            padding: 4px 12px;
+            font-size: 10px;
+            font-family: "MS Sans Serif", Arial, sans-serif;
+            cursor: pointer;
+        }
+
+        .old-player-btn:active {
+            border-color: #808080 #fff #fff #808080;
+        }
+
+        /* Music List Styles */
+        .song-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .song-item {
+            background-color: #111;
+            border: 1px solid #333;
+            margin-bottom: 8px;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: 0.2s;
+        }
+
+        .song-item:hover {
+            background-color: #1a1a1a;
+            border-color: #ff1493;
+            transform: translateX(5px);
+        }
+
+        .song-number {
+            color: #ff1493;
+            font-weight: bold;
+            font-size: 1.2rem;
+            min-width: 30px;
+        }
+
+        .song-info {
+            flex: 1;
+        }
+
+        .song-title {
+            color: #fff;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .song-artist {
+            color: #888;
+            font-size: 0.75rem;
+            margin-top: 2px;
+        }
+
+        .song-vibe {
+            color: #00ffff;
+            font-size: 0.7rem;
+            font-style: italic;
+        }
+
+        .blinking {
+            animation: blinker 1s linear infinite;
+            color: #ff1493;
+            font-weight: bold;
+        }
+
+        @keyframes blinker {
+            50% { opacity: 0; }
+        }
+
+        .genre-tag {
+            display: inline-block;
+            background: #333;
+            border: 1px solid #555;
+            padding: 2px 8px;
+            font-size: 0.7rem;
+            color: #ff69b4;
+            margin: 2px;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.7rem;
+            color: #555;
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 2px solid #333;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <header>
+        <h1>MAY'S SPACE</h1>
+        <div class="subtitle">"I Don't Got No Shame Left, Baby, That's My Freedom"</div>
+    </header>
+
+    <!-- Marquee -->
+    <div class="marquee-container">
+        <marquee scrollamount="5" scrolldelay="100">+++ TURN UR SPEAKERS UP +++ emo is not a phase mom +++ gay bangers only +++ xoxo +++</marquee>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="photos.html">Photos</a>
+        <a href="music.html">Music</a>
+        <a href="guestbook.html">Guestbook</a>
+    </nav>
+
+    <!-- Page Title -->
+    <div class="page-title">
+        <h2>* * * MAY'S MUSIC * * *</h2>
+        <p style="color: #888; font-size: 0.8rem;">( the soundtrack 2 my unhinged life )</p>
+    </div>
+
+    <!-- Simple Old Web Player -->
+    <div class="old-player">
+        <div class="old-player-inner">
+            <div class="old-player-title">
+                <marquee scrollamount="2">~ now playing: iconic ~</marquee>
+            </div>
+            <audio id="bgMusic" autoplay loop controls style="width: 100%; height: 25px;">
+                <source src="assets/MADISON ROSE - ICONIC! (OFFICIAL AUDIO) - Madison Rose.mp3" type="audio/mpeg">
+            </audio>
+            <div class="old-player-controls">
+                <button class="old-player-btn" onclick="document.getElementById('bgMusic').play()">PLAY</button>
+                <button class="old-player-btn" onclick="document.getElementById('bgMusic').pause()">STOP</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Favorite Songs Box -->
+    <div class="box">
+        <div class="box-header">
+            <span>May's Top Songs (NO SKIPS!!!)</span>
+            <div class="controls"><span></span><span></span><span></span></div>
+        </div>
+        <div class="box-content">
+            <ul class="song-list">
+                <li class="song-item">
+                    <span class="song-number">01</span>
+                    <div class="song-info">
+                        <div class="song-title">iconic</div>
+                        <div class="song-artist">Madison Rose</div>
+                        <div class="song-vibe">"literally my theme song"</div>
+                    </div>
+                </li>
+                <li class="song-item">
+                    <span class="song-number">02</span>
+                    <div class="song-info">
+                        <div class="song-title">I Write Sins Not Tragedies</div>
+                        <div class="song-artist">Panic! At The Disco</div>
+                        <div class="song-vibe">"closing the goddamn door since 2005"</div>
+                    </div>
+                </li>
+                <li class="song-item">
+                    <span class="song-number">03</span>
+                    <div class="song-info">
+                        <div class="song-title">Sugar, We're Goin Down</div>
+                        <div class="song-artist">Fall Out Boy</div>
+                        <div class="song-vibe">"WE'RE GOING DOWN DOWN"</div>
+                    </div>
+                </li>
+                <li class="song-item">
+                    <span class="song-number">04</span>
+                    <div class="song-info">
+                        <div class="song-title">Welcome to the Black Parade</div>
+                        <div class="song-artist">My Chemical Romance</div>
+                        <div class="song-vibe">"WHEN I WAS A YOUNG BOY"</div>
+                    </div>
+                </li>
+                <li class="song-item">
+                    <span class="song-number">05</span>
+                    <div class="song-info">
+                        <div class="song-title">SLUMBER PARTY</div>
+                        <div class="song-artist">Ashnikko ft. Princess Nokia</div>
+                        <div class="song-vibe">"gay rights anthem tbh"</div>
+                    </div>
+                </li>
+                <li class="song-item">
+                    <span class="song-number">06</span>
+                    <div class="song-info">
+                        <div class="song-title">Girls Like Girls</div>
+                        <div class="song-artist">Hayley Kiyoko</div>
+                        <div class="song-vibe">"lesbian jesus spoke"</div>
+                    </div>
+                </li>
+                <li class="song-item">
+                    <span class="song-number">07</span>
+                    <div class="song-info">
+                        <div class="song-title">i wanna be your girlfriend</div>
+                        <div class="song-artist">girl in red</div>
+                        <div class="song-vibe">"do u listen to girl in red??"</div>
+                    </div>
+                </li>
+                <li class="song-item">
+                    <span class="song-number">08</span>
+                    <div class="song-info">
+                        <div class="song-title">DAISY</div>
+                        <div class="song-artist">Ashnikko</div>
+                        <div class="song-vibe">"eat men for breakfast energy"</div>
+                    </div>
+                </li>
+                <li class="song-item">
+                    <span class="song-number">09</span>
+                    <div class="song-info">
+                        <div class="song-title">Thnks fr th Mmrs</div>
+                        <div class="song-artist">Fall Out Boy</div>
+                        <div class="song-vibe">"vowels r overrated anyway"</div>
+                    </div>
+                </li>
+                <li class="song-item">
+                    <span class="song-number">10</span>
+                    <div class="song-info">
+                        <div class="song-title">Girls/Girls/Boys</div>
+                        <div class="song-artist">Panic! At The Disco</div>
+                        <div class="song-vibe">"love is not a choice!!!"</div>
+                    </div>
+                </li>
+                <li class="song-item">
+                    <span class="song-number">11</span>
+                    <div class="song-info">
+                        <div class="song-title">Helena</div>
+                        <div class="song-artist">My Chemical Romance</div>
+                        <div class="song-vibe">"so long and goodnight"</div>
+                    </div>
+                </li>
+                <li class="song-item">
+                    <span class="song-number">12</span>
+                    <div class="song-info">
+                        <div class="song-title">Teenagers</div>
+                        <div class="song-artist">My Chemical Romance</div>
+                        <div class="song-vibe">"they said all teenagers scare the living sh*t outta me"</div>
+                    </div>
+                </li>
+                <li class="song-item">
+                    <span class="song-number">13</span>
+                    <div class="song-info">
+                        <div class="song-title">Dance, Dance</div>
+                        <div class="song-artist">Fall Out Boy</div>
+                        <div class="song-vibe">"we're falling apart to half time"</div>
+                    </div>
+                </li>
+                <li class="song-item">
+                    <span class="song-number">14</span>
+                    <div class="song-info">
+                        <div class="song-title">Misery Business</div>
+                        <div class="song-artist">Paramore</div>
+                        <div class="song-vibe">"ONCE A WHORE UR NOTHING MORE"</div>
+                    </div>
+                </li>
+                <li class="song-item">
+                    <span class="song-number">15</span>
+                    <div class="song-info">
+                        <div class="song-title">STUPID</div>
+                        <div class="song-artist">Ashnikko</div>
+                        <div class="song-vibe">"boy ur so STUPID i luv it"</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Genres Box -->
+    <div class="box">
+        <div class="box-header">
+            <span>Genres I Vibe With</span>
+            <div class="controls"><span></span></div>
+        </div>
+        <div class="box-content" style="text-align: center;">
+            <span class="genre-tag">Emo</span>
+            <span class="genre-tag">Pop Punk</span>
+            <span class="genre-tag">Gay Anthems</span>
+            <span class="genre-tag">2000s Scene Kid</span>
+            <span class="genre-tag">Sapphic Yearning</span>
+            <span class="genre-tag">Unhinged Bops</span>
+            <span class="genre-tag">Angry Girl Music</span>
+            <span class="genre-tag">Chaotic Bisexual Energy</span>
+            <span class="genre-tag">Rawr XD Core</span>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>
+            Copyright &copy; Forever - May's Space. No Rights Reserved Because Rules Are Boring.<br>
+            Made with sleep deprivation & delusion. Best viewed with an open mind & low expectations.
+        </p>
+        <div style="margin-top: 10px;">
+            <span style="border:1px solid #444; padding:2px 5px; font-size:10px;">NO SHAME</span>
+            <span style="border:1px solid #444; padding:2px 5px; font-size:10px;">100% AUTHENTIC</span>
+            <span style="border:1px solid #444; padding:2px 5px; font-size:10px;">CHAOS CERTIFIED</span>
+        </div>
+    </footer>
+
+</div>
+
+</body>
+</html>
